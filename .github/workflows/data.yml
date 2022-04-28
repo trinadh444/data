@@ -1,14 +1,18 @@
 name: 'vpc deploy'
-description: "Uses a multi-step process to enforce arbitrary claims on a GitHub OIDC token"
 on:
   workflow_call:
-inputs:
-    workingdirectory:
+    inputs:
+      workingdirectory:
         description: "working directory of terraform"
         required: true
-runs:
-   using: "composite"
-   steps:
+        type: string
+        
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
  
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
