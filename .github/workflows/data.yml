@@ -1,4 +1,4 @@
-name: 'IAM Analyzer Audit'
+name: 'vpc deploy'
 description: "Uses a multi-step process to enforce arbitrary claims on a GitHub OIDC token"
 on:
   workflow_call:
