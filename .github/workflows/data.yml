@@ -1,5 +1,7 @@
 name: 'IAM Analyzer Audit'
 description: "Uses a multi-step process to enforce arbitrary claims on a GitHub OIDC token"
+on:
+  workflow_call:
 inputs:
     workingdirectory:
         description: "working directory of terraform"
