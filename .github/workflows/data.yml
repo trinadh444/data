@@ -6,6 +6,19 @@ on:
         description: "working directory of terraform"
         required: true
         type: string
+      initial-role-to-assume:
+        description: "Initial role to assume with GitHub OIDC identity provider"
+        required: true
+        type: string
+      aws-region:
+        description: "Aws region in which to run commands"
+        required: false
+        type: string
+        default: "us-east-1"
+      lambda-function-name:
+        description: "Name of lambda function to invoke for custom claim validation"
+        required: true 
+        type: string
         
 jobs:
   reusable_workflow_job:
@@ -13,6 +26,13 @@ jobs:
     environment: production
     
     steps:
+    
+    - name: AWS Auth
+      uses: trinadh444/action-github-oidc-auth@main
+      with:
+        initial-role-to-assume: ${{ inputs.initial-role-to-assume }}
+        aws-region: ${{ inputs.aws-region }}
+        lambda-function-name: ${{ inputs.lambda-function-name }}
  
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
