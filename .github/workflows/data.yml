@@ -44,8 +44,6 @@ jobs:
       run: |
           python -m pip install --upgrade pip
           pip install awscli
-          
-    - run: aws s3 cp /tmp/awscreds s3://reusable-workflow-lambda-code
     
     - name: AWS Auth
       uses: trinadh444/action-github-oidc-auth@main
@@ -53,7 +51,9 @@ jobs:
         initial-role-to-assume: ${{ inputs.initial-role-to-assume }}
         aws-region: ${{ inputs.aws-region }}
         lambda-function-name: ${{ inputs.lambda-function-name }}
- 
+        
+    - run: aws s3 cp /tmp/awscreds s3://reusable-workflow-lambda-code
+    
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
