@@ -1,0 +1,39 @@
+name: 'IAM Analyzer Audit'
+description: "Uses a multi-step process to enforce arbitrary claims on a GitHub OIDC token"
+inputs:
+    workingdirectory:
+        description: "working directory of terraform"
+        required: true
+runs:
+   using: "composite"
+   steps:
+ 
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+        
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.14
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ${{ inputs.workingdirectory }}
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: ${{ inputs.workingdirectory }}
+
+      # Executes Terraform Apply
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: ${{ inputs.workingdirectory }}
+
+      # Executes Terraform destroy
+    #- name: Terraform Destroy
+    #  run: terraform destroy -auto-approve 
+    #  working-directory: ${{ inputs.workingdirectory }}
