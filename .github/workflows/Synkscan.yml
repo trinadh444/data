@@ -25,9 +25,13 @@ jobs:
            
     - name: Auth Synk 
       run: snyk auth 00d132d0-d20a-4c06-8495-cbfee1bd7530
+      
+    - name: Auth Synk 
+      run:  snyk code test .
          
     - name: Snyk Monitor
       run: snyk monitor 
+      
       
   Terraform:
     runs-on: ubuntu-latest
